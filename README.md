@@ -17,5 +17,5 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/devpulse-cli.git](https://github.com/YOUR_USERNAME/devpulse-cli.git)
+   git clone [https://github.com/susenayw/CLI-Tool.git](https://github.com/susenayw/CLI-Tool.git)
    cd devpulse-cli
