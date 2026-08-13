@@ -1,23 +1,32 @@
-⚡ DevPulse Hybrid Desktop
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>⚡ DevPulse Hybrid Desktop</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>⚡ DevPulse Desktop (Electron + Python)</h1>
+  </header>
 
+  <section>
+    <h3>🌤️ Weather Query</h3>
+    <div class="input-group">
+      <input type="text" id="city-input" placeholder="Enter city (e.g. Medan, Tokyo)" />
+      <button id="get-weather-btn">Fetch Data</button>
+    </div>
+    <div id="weather-card" class="card">
+      <p>Results from Python backend will render here.</p>
+    </div>
+  </section>
 
-  
-    ⚡ DevPulse Desktop (Electron + Python)
-  
+  <section style="margin-top: 30px;">
+    <h3>📊 Text File Statistics</h3>
+    <button id="select-stats-file" style="background:#202024; border:1px solid #323238; margin-top:10px;">Select File</button>
+    <div id="stats-card" class="card">Select a file to process with Python.</div>
+  </section>
 
-  
-    🌤️ Weather Query
-    
-      
-      Fetch Data
-    
-    
-      Results from Python backend will render here.
-    
-  
-
-  
-    📊 Text File Statistics
-    Select File
-    Select a file to process with Python.
+  <script src="renderer.js"></script>
+</body>
+</html>
