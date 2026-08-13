@@ -1,24 +1,38 @@
 {
-  "name": "devpulse-hybrid",
+  "name": "devpulse-desktop",
   "version": "1.0.0",
-  "description": "Hybrid Electron GUI + Python backend utility application",
+  "description": "DevPulse Portable Desktop Application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/susenayw/CLI-Tool.git"
+  "build": {
+    "appId": "com.devpulse.desktop",
+    "productName": "DevPulse Desktop",
+    "icon": "build/icon.ico",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "bin/",
+        "to": "bin/",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": "portable"
+    },
+    "portable": {
+      "artifactName": "DevPulse-Desktop-Portable.exe"
+    }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/susenayw/CLI-Tool/issues"
-  },
-  "homepage": "https://github.com/susenayw/CLI-Tool#readme",
   "devDependencies": {
-    "electron": "^43.4.0"
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.7"
   }
 }

@@ -1,6 +1,6 @@
 // main.js
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 const path = require('path');
 
 function createWindow() {
@@ -8,6 +8,7 @@ function createWindow() {
     width: 720,
     height: 540,
     resizable: false,
+    icon: path.join(__dirname, 'build', 'icon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -24,12 +25,20 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-// Helper function to execute Python CLI and parse JSON output
+// Resolve binary path depending on dev mode vs packaged build
+function getEnginePath() {
+  const isPackaged = app.isPackaged;
+  return isPackaged
+    ? path.join(process.resourcesPath, 'bin', 'devpulse-engine.exe')
+    : path.join(__dirname, 'bin', 'devpulse-engine.exe');
+}
+
+// Execute Python binary
 function runPythonCommand(commandArgs) {
   return new Promise((resolve, reject) => {
-    const command = `python -m devpulse.main ${commandArgs}`;
+    const enginePath = getEnginePath();
     
-    exec(command, { cwd: __dirname }, (error, stdout, stderr) => {
+    execFile(enginePath, commandArgs, (error, stdout, stderr) => {
       if (error) {
         reject(stderr || error.message);
         return;
@@ -45,7 +54,7 @@ function runPythonCommand(commandArgs) {
 
 // --- IPC Handlers ---
 ipcMain.handle('python-weather', async (event, city) => {
-  return await runPythonCommand(`weather "${city}" --json`);
+  return await runPythonCommand(['weather', city, '--json']);
 });
 
 ipcMain.handle('select-file', async () => {
@@ -54,5 +63,5 @@ ipcMain.handle('select-file', async () => {
 });
 
 ipcMain.handle('python-stats', async (event, filePath) => {
-  return await runPythonCommand(`stats "${filePath}" --json`);
+  return await runPythonCommand(['stats', filePath, '--json']);
 });
